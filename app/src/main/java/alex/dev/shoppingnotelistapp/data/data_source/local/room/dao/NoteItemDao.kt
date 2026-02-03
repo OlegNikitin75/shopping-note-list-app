@@ -16,7 +16,7 @@ interface NoteItemDao {
     suspend fun insertNoteItem(item: NoteItem)
 
     //Обновление заметки
-    @Update(onConflict = OnConflictStrategy.REPLACE)
+    @Update
     suspend fun updateNoteItem(item: NoteItem)
 
     //Удаление заметки

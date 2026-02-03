@@ -9,6 +9,7 @@ data class Store(
     @ColumnInfo("store_id")
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
+    @ColumnInfo(name = "store_name")
     val name: String,
     val listId: Int,
 )

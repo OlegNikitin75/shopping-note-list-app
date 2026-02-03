@@ -9,6 +9,7 @@ data class ShoppingList(
     @ColumnInfo("shopping_list_id")
     @PrimaryKey
     val id: Int,
+    @ColumnInfo(name = "shopping_list_name")
     val name: String,
     val time: String,
     val allItemsCount: Int,

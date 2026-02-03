@@ -1,6 +1,6 @@
 package alex.dev.shoppingnotelistapp.data.data_source.local.room.dao
 
-import alex.dev.shoppingnotelistapp.data.data_source.local.room.entities.ListItem
+import alex.dev.shoppingnotelistapp.data.data_source.local.room.entities.ShoppingListItem
 import alex.dev.shoppingnotelistapp.data.data_source.local.room.entities.ShoppingList
 import alex.dev.shoppingnotelistapp.data.data_source.local.room.entities.Store
 import androidx.room.Dao
@@ -9,6 +9,7 @@ import androidx.room.Embedded
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -18,8 +19,8 @@ interface ShoppingListDao {
     suspend fun insertShoppingList(shoppingList: ShoppingList)
 
     //Обновление списка покупок
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun updateShoppingList(name: String)
+    @Update
+    suspend fun updateShoppingList(shoppingList: ShoppingList)
 
     //Удаление списка покупок
     @Delete
@@ -36,8 +37,8 @@ interface ShoppingListDao {
     @Query(
         """
         SELECT * FROM items AS I INNER JOIN shopping_lists AS S
-        ON I.listId = S.shopping_list_id INNER JOIN stores AS ST
-        ON I.storeId = ST.store_id
+        ON I.list_id = S.shopping_list_id INNER JOIN stores AS ST
+        ON I.fk_store_id = ST.store_id
         """
     )
     fun getItemsWithStoreAndShoppingList(): Flow<List<ItemsWithStoreAndShoppingList>>
@@ -48,8 +49,8 @@ interface ShoppingListDao {
     @Query(
         """
         SELECT * FROM items AS I INNER JOIN shopping_lists AS S
-        ON I.listId = S.shopping_list_id INNER JOIN stores AS ST
-        ON I.storeId = ST.store_id WHERE S.shopping_list_id = :listId
+        ON I.list_id = S.shopping_list_id INNER JOIN stores AS ST
+        ON I.fk_store_id = ST.store_id WHERE S.shopping_list_id = :listId
         """
     )
     fun getItemsWithStoreAndShoppingListFilteredById(listId: Int): Flow<List<ItemsWithStoreAndShoppingList>>
@@ -60,15 +61,15 @@ interface ShoppingListDao {
     @Query(
         """
         SELECT * FROM items AS I INNER JOIN shopping_lists AS S
-        ON I.listId = S.shopping_list_id INNER JOIN stores AS ST
-        ON I.storeId = ST.store_id WHERE I.item_id=:itemId
+        ON I.list_id = S.shopping_list_id INNER JOIN stores AS ST
+        ON I.fk_store_id = ST.store_id WHERE I.item_id=:itemId
         """
     )
     fun getItemWithStoreAndShoppingListFilteredById(itemId: Int): Flow<ItemsWithStoreAndShoppingList>
 }
 
 data class ItemsWithStoreAndShoppingList(
-    @Embedded val item: ListItem,
+    @Embedded val item: ShoppingListItem,
     @Embedded val shoppingList: ShoppingList,
     @Embedded val store: Store
 )

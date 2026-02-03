@@ -1,4 +1,4 @@
-package alex.dev.shoppingnotelistapp.ui.theme
+package alex.dev.shoppingnotelistapp.presentation.ui.components.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

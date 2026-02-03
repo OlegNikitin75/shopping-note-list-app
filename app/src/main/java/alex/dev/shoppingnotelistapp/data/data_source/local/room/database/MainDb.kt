@@ -1,20 +1,24 @@
-package alex.dev.shoppinglistapp.data.local.database
+package alex.dev.shoppingnotelistapp.data.data_source.local.room.database
 
-import alex.dev.shoppingnotelistapp.data.data_source.local.room.dao.ListItemDao
 import alex.dev.shoppingnotelistapp.data.data_source.local.room.dao.NoteItemDao
 import alex.dev.shoppingnotelistapp.data.data_source.local.room.dao.ShoppingListDao
-import alex.dev.shoppinglistapp.data.local.entities.ListItem
-import alex.dev.shoppinglistapp.data.local.entities.NoteItem
-import alex.dev.shoppinglistapp.data.local.entities.ShoppingList
+import alex.dev.shoppingnotelistapp.data.data_source.local.room.dao.ShoppingListItemDao
+import alex.dev.shoppingnotelistapp.data.data_source.local.room.dao.StoreDao
+import alex.dev.shoppingnotelistapp.data.data_source.local.room.entities.NoteItem
+import alex.dev.shoppingnotelistapp.data.data_source.local.room.entities.ShoppingList
+import alex.dev.shoppingnotelistapp.data.data_source.local.room.entities.ShoppingListItem
+import alex.dev.shoppingnotelistapp.data.data_source.local.room.entities.Store
 import androidx.room.Database
 import androidx.room.RoomDatabase
 
 @Database(
-    entities = [ShoppingList::class, ListItem::class, NoteItem::class],
-    version = 1
+    entities = [ShoppingList::class, ShoppingListItem::class, NoteItem::class, Store::class],
+    version = 1,
+    exportSchema = false
 )
 abstract class MainDb : RoomDatabase() {
     abstract val shoppingListDao: ShoppingListDao
-    abstract val listItemDao: ListItemDao
+    abstract val shoppingListItemDao: ShoppingListItemDao
     abstract val noteItemDao: NoteItemDao
+    abstract val storeDao: StoreDao
 }

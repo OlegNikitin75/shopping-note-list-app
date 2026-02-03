@@ -1,6 +1,13 @@
-package alex.dev.shoppingnotelistapp.ui.theme
+package alex.dev.shoppingnotelistapp.presentation.ui.components.theme
 
-import android.app.Activity
+import alex.dev.shoppinglistapp.presentation.ui.theme.AppDark
+import alex.dev.shoppinglistapp.presentation.ui.theme.AppDarkSlateTeal
+import alex.dev.shoppinglistapp.presentation.ui.theme.AppGray
+import alex.dev.shoppinglistapp.presentation.ui.theme.AppGreen
+import alex.dev.shoppinglistapp.presentation.ui.theme.AppLightGray
+import alex.dev.shoppinglistapp.presentation.ui.theme.AppWhite
+import alex.dev.shoppinglistapp.presentation.ui.theme.Pink40
+import alex.dev.shoppinglistapp.presentation.ui.theme.Pink80
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
@@ -12,21 +19,29 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
+    primary = AppGreen,
+    onPrimary = AppWhite,
+    secondary = AppGray,
+    tertiary = Pink80,
+    background = AppDark,
+    onBackground = AppWhite,
+    surface = AppDarkSlateTeal,
+    onSurface = AppWhite,
 )
 private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
+    primary = AppGreen,
+    onPrimary = AppWhite,
+    secondary = AppGray,
+    tertiary = Pink40,
+    background = AppWhite,
+    onBackground = AppDark,
+    surface = AppLightGray,
+    onSurface = AppDark,
     /* Other default colors to override
-    background = Color(0xFFFFFBFE),
     surface = Color(0xFFFFFBFE),
     onPrimary = Color.White,
     onSecondary = Color.White,
     onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
     onSurface = Color(0xFF1C1B1F),
     */
 )
@@ -35,7 +50,7 @@ private val LightColorScheme = lightColorScheme(
 fun ShoppingNoteListAppTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
+    dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {
