@@ -29,5 +29,5 @@ interface StoreDao {
 
     //Получение магазина по id
     @Query("SELECT * FROM stores WHERE store_id = :storeId")
-    fun getShoppingListItemById(storeId: Int): Flow<List<Store>>
+    fun getStoreById(storeId: Int): Flow<Store>
 }

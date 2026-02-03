@@ -11,5 +11,5 @@ data class NoteItem(
     val id: Int = 0,
     val title: String,
     val description: String,
-    val time: String,
+    val createdAt: Long = 0L,
 )

@@ -58,6 +58,7 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.test.manifest)
 
     //Dagger Hilt
+    implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
     //Navigation
@@ -66,7 +67,7 @@ dependencies {
     implementation(libs.room.ktx)
     implementation(libs.room.runtime)
     ksp(libs.androidx.room.compiler)
-    //Spalshscreen
+    //Splashscreen
     implementation(libs.androidx.core.splashscreen)
 
 }

@@ -7,11 +7,11 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "shopping_lists")
 data class ShoppingList(
     @ColumnInfo("shopping_list_id")
-    @PrimaryKey
-    val id: Int,
+    @PrimaryKey(autoGenerate = true)
+    val id: Int = 0,
     @ColumnInfo(name = "shopping_list_name")
     val name: String,
-    val time: String,
+    val createdAt: Long = 0L,
     val allItemsCount: Int,
     val allSelectedItemsCount: Int
 )
