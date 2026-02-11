@@ -1,6 +1,6 @@
 package alex.dev.shoppingnotelistapp.presentation.ui.components
 
-import alex.dev.shoppingnotelistapp.presentation.ui.components.theme.RobotoFlex
+import alex.dev.shoppingnotelistapp.presentation.ui.theme.RobotoFlex
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row

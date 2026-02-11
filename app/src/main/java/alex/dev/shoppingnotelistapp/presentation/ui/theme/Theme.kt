@@ -1,13 +1,5 @@
-package alex.dev.shoppingnotelistapp.presentation.ui.components.theme
+package alex.dev.shoppingnotelistapp.presentation.ui.theme
 
-import alex.dev.shoppinglistapp.presentation.ui.theme.AppDark
-import alex.dev.shoppinglistapp.presentation.ui.theme.AppDarkSlateTeal
-import alex.dev.shoppinglistapp.presentation.ui.theme.AppGray
-import alex.dev.shoppinglistapp.presentation.ui.theme.AppGreen
-import alex.dev.shoppinglistapp.presentation.ui.theme.AppLightGray
-import alex.dev.shoppinglistapp.presentation.ui.theme.AppWhite
-import alex.dev.shoppinglistapp.presentation.ui.theme.Pink40
-import alex.dev.shoppinglistapp.presentation.ui.theme.Pink80
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
@@ -27,6 +19,7 @@ private val DarkColorScheme = darkColorScheme(
     onBackground = AppWhite,
     surface = AppDarkSlateTeal,
     onSurface = AppWhite,
+    outline = AppWhite
 )
 private val LightColorScheme = lightColorScheme(
     primary = AppGreen,
@@ -37,12 +30,10 @@ private val LightColorScheme = lightColorScheme(
     onBackground = AppDark,
     surface = AppLightGray,
     onSurface = AppDark,
+    outline = AppBlack
     /* Other default colors to override
-    surface = Color(0xFFFFFBFE),
-    onPrimary = Color.White,
     onSecondary = Color.White,
     onTertiary = Color.White,
-    onSurface = Color(0xFF1C1B1F),
     */
 )
 

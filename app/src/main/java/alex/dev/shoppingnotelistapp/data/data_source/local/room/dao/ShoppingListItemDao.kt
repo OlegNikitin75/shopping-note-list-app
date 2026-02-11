@@ -1,5 +1,6 @@
 package alex.dev.shoppingnotelistapp.data.data_source.local.room.dao
 
+import alex.dev.shoppingnotelistapp.data.data_source.local.room.entities.ShoppingList
 import alex.dev.shoppingnotelistapp.data.data_source.local.room.entities.ShoppingListItem
 import androidx.room.Dao
 import androidx.room.Delete
@@ -23,15 +24,19 @@ interface ShoppingListItemDao {
     @Delete
     suspend fun deleteListItem(item: ShoppingListItem)
 
-    //Получение всех элементов
-    @Query("SELECT * FROM items")
-    fun getAllShoppingListItems(): Flow<List<ShoppingListItem>>
-
     //Получение всех элементов списка покупок по id выбранного списка
     @Query("SELECT * FROM items WHERE list_id = :listId")
-    fun getAllShoppingListItemsById(listId: Int): Flow<List<ShoppingListItem>>
+    fun getAllShoppingListItems(listId: Long): Flow<List<ShoppingListItem>>
 
     //Получение  элемента списка покупок по id выбранного элемента
     @Query("SELECT * FROM items WHERE item_id = :itemId")
-    fun getShoppingListItemById(itemId: Int): Flow<List<ShoppingListItem>>
+    suspend fun getShoppingListItemById(itemId: Long): ShoppingListItem
+
+    //Получение списка покупок по id выбранного списка
+    @Query("SELECT * FROM shopping_lists WHERE shopping_list_id = :listId")
+    suspend fun getShoppingListById(listId: Long): ShoppingList
+
+    //Обновление списка покупок
+    @Update
+    suspend fun updateShoppingList(shoppingList: ShoppingList)
 }

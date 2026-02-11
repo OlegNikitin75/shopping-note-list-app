@@ -1,9 +1,8 @@
 package alex.dev.shoppingnotelistapp.presentation.ui.components.bottom_nav
 
-import alex.dev.shoppingnotelistapp.presentation.ui.components.theme.RobotoFlex
+import alex.dev.shoppingnotelistapp.presentation.ui.theme.RobotoFlex
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme

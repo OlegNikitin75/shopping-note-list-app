@@ -5,7 +5,7 @@ import alex.dev.shoppingnotelistapp.presentation.navigation.NavigationGraph
 import alex.dev.shoppingnotelistapp.presentation.navigation.Screens
 import alex.dev.shoppingnotelistapp.presentation.ui.components.BottomSheetItem
 import alex.dev.shoppingnotelistapp.presentation.ui.components.bottom_nav.BottomNav
-import alex.dev.shoppingnotelistapp.presentation.ui.components.theme.RobotoFlex
+import alex.dev.shoppingnotelistapp.presentation.ui.theme.RobotoFlex
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -20,6 +20,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -49,9 +51,11 @@ fun MainScreen() {
         Screens.ShoppingList.screen,
         Screens.NoteList.screen
     )
+    val snackbarHostState = remember { SnackbarHostState() }
 
 
     Scaffold(
+        snackbarHost = { SnackbarHost(snackbarHostState) },
         floatingActionButton = {
             if (showBottomBar) {
                 Column(
@@ -59,6 +63,7 @@ fun MainScreen() {
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
+
                     FloatingActionButton(
                         onClick = { showBottomSheet = true },
                         modifier = Modifier
@@ -89,7 +94,10 @@ fun MainScreen() {
         },
         floatingActionButtonPosition = FabPosition.Center,
     ) { paddingValues ->
-        NavigationGraph(navController = navController)
+        NavigationGraph(
+            navController = navController,
+            snackbarHostState = snackbarHostState
+        )
     }
     if (showBottomSheet) {
         ModalBottomSheet(
@@ -106,15 +114,15 @@ fun MainScreen() {
             ) {
                 BottomSheetItem(
                     iconId = R.drawable.ic_add_shopping_list,
-                    title = "Добавить список покупок",
+                    title = "Новый список",
                     onClick = {
                         showBottomSheet = false
-                        navController.navigate(Screens.AddShoppingList.screen) { popUpTo(0) }
+                        navController.navigate(Screens.AddShoppingList.screen)
                     }
                 )
                 BottomSheetItem(
                     iconId = R.drawable.ic_add_note,
-                    title = "Добавить заметку",
+                    title = "Новая заметка",
                     onClick = {
                         showBottomSheet = false
                         navController.navigate(Screens.AddNote.screen) { popUpTo(0) }

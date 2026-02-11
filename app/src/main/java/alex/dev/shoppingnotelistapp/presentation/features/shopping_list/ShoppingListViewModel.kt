@@ -20,10 +20,7 @@ import javax.inject.Inject
 class ShoppingListViewModel @Inject constructor(
     private val repository: ShoppingListRepository
 ) : ViewModel() {
-    private val _errorEvents = MutableSharedFlow<String>(extraBufferCapacity = 1)
-    val errorEvents: SharedFlow<String> = _errorEvents.asSharedFlow()
-    private val _successEvents = MutableSharedFlow<String>()
-    val successEvents = _successEvents.asSharedFlow()
+    // Состояние экрана
     val uiState: StateFlow<ShoppingListUiState> =
         repository.getAllShoppingLists()
             .map { lists ->
@@ -37,7 +34,7 @@ class ShoppingListViewModel @Inject constructor(
                 emit(
                     ShoppingListUiState(
                         isLoading = false,
-                        errorMessage = "Не удалось загрузить: ${throwable.message ?: "ошибка"}"
+                        errorMessage = "Не удалось загрузить списки: ${throwable.message ?: "ошибка"}"
                     )
                 )
             }
@@ -47,38 +44,65 @@ class ShoppingListViewModel @Inject constructor(
                 initialValue = ShoppingListUiState(isLoading = true)
             )
 
-    fun addShoppingList(shoppingList: ShoppingList) {
+    // События для UI (ошибки и успехи)
+    private val _errorEvents = MutableSharedFlow<String>(extraBufferCapacity = 1)
+    val errorEvents: SharedFlow<String> = _errorEvents.asSharedFlow()
+    private val _successEvents = MutableSharedFlow<String>(extraBufferCapacity = 1)
+    val successEvents: SharedFlow<String> = _successEvents.asSharedFlow()
+
+    // Undo для удаления
+    private val _undoEvents = MutableSharedFlow<UndoEvent>(extraBufferCapacity = 1)
+    val undoEvents: SharedFlow<UndoEvent> = _undoEvents.asSharedFlow()
+    fun deleteShoppingList(item: ShoppingList) {
         viewModelScope.launch {
-            val name = shoppingList.name.trim()
-            if (name.isBlank()) {
-                _errorEvents.emit("Название списка не может быть пустым")
-                return@launch
-            }
             try {
-                repository.insertShoppingList(
-                    ShoppingList(
-                        name = shoppingList.name,
-                        createdAt = System.currentTimeMillis(),
-                        allItemsCount = 0,
-                        allSelectedItemsCount = 0,
+                repository.deleteShoppingList(item)
+                // Успех — показываем Snackbar с undo
+                _undoEvents.emit(
+                    UndoEvent.ShowUndo(
+                        item = item,
+                        message = "Список «${item.name}» удалён"
                     )
                 )
-                _successEvents.emit("Список «${name}» добавлен")
             } catch (e: Exception) {
-                _errorEvents.emit("Не удалось добавить список покупок: ${e.localizedMessage ?: "ошибка"}")
+                _errorEvents.emit("Не удалось удалить список: ${e.localizedMessage ?: "ошибка"}")
             }
         }
     }
 
-    fun deleteShoppingList(shoppingList: ShoppingList) {
+    fun undoDelete(item: ShoppingList) {
         viewModelScope.launch {
             try {
-                repository.deleteShoppingList(shoppingList)
+                repository.insertShoppingList(item)
+                _successEvents.emit("Список восстановлен")
             } catch (e: Exception) {
-                _errorEvents.emit("Не удалось удалить: ${e.localizedMessage ?: "ошибка"}")
+                _errorEvents.emit("Не удалось восстановить список")
             }
         }
     }
+
+    fun updateShoppingList(updatedList: ShoppingList) {
+        viewModelScope.launch {
+            val trimmedName = updatedList.name.trim()
+
+            if (trimmedName.isBlank()) {
+                _errorEvents.emit("Название списка не может быть пустым")
+                return@launch
+            }
+            try {
+                // Обновляем с уже очищенным именем
+                repository.updateShoppingList(updatedList.copy(name = trimmedName))
+                _successEvents.emit("Список обновлён")
+            } catch (e: Exception) {
+                _errorEvents.emit("Ошибка обновления: ${e.localizedMessage ?: "неизвестная ошибка"}")
+            }
+        }
+    }
+}
+
+sealed class UndoEvent {
+    data class ShowUndo(val item: ShoppingList, val message: String) : UndoEvent()
+    data class ShowError(val message: String) : UndoEvent()
 }
 
 data class ShoppingListUiState(

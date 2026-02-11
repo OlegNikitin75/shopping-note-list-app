@@ -1,7 +1,7 @@
 package alex.dev.shoppingnotelistapp
 
 import alex.dev.shoppingnotelistapp.presentation.features.main.MainScreen
-import alex.dev.shoppingnotelistapp.presentation.ui.components.theme.ShoppingNoteListAppTheme
+import alex.dev.shoppingnotelistapp.presentation.ui.theme.ShoppingNoteListAppTheme
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent

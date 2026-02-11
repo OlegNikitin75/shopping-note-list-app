@@ -8,8 +8,8 @@ import androidx.room.PrimaryKey
 data class NoteItem(
     @ColumnInfo("note_id")
     @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
+    val id: Long = 0L,
     val title: String,
     val description: String,
-    val createdAt: Long = 0L,
+    val createdAt: Long = System.currentTimeMillis(),
 )

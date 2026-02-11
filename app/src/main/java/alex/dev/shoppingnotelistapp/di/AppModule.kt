@@ -4,12 +4,9 @@ import alex.dev.shoppingnotelistapp.data.data_source.local.room.database.MainDb
 import alex.dev.shoppingnotelistapp.data.repository.NoteItemRepository
 import alex.dev.shoppingnotelistapp.data.repository.ShoppingListItemRepository
 import alex.dev.shoppingnotelistapp.data.repository.ShoppingListRepository
-import alex.dev.shoppingnotelistapp.data.repository.StoreRepository
 import alex.dev.shoppingnotelistapp.data.repository.impl.NoteItemRepoImpl
 import alex.dev.shoppingnotelistapp.data.repository.impl.ShoppingListItemRepoImpl
 import alex.dev.shoppingnotelistapp.data.repository.impl.ShoppingListRepoImpl
-import alex.dev.shoppingnotelistapp.data.repository.impl.StoreRepoImpl
-import android.app.Application
 import android.content.Context
 import androidx.room.Room
 import dagger.Module
@@ -48,11 +45,5 @@ object AppModule {
     @Singleton
     fun provideNoteItemRepo(db: MainDb): NoteItemRepository {
         return NoteItemRepoImpl(db.noteItemDao)
-    }
-
-    @Provides
-    @Singleton
-    fun provideStoreRepo(db: MainDb): StoreRepository {
-        return StoreRepoImpl(db.storeDao)
     }
 }

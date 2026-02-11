@@ -1,4 +1,4 @@
-package alex.dev.shoppingnotelistapp.presentation.ui.components.theme
+package alex.dev.shoppingnotelistapp.presentation.ui.theme
 
 import alex.dev.shoppingnotelistapp.R
 import androidx.compose.ui.text.font.Font

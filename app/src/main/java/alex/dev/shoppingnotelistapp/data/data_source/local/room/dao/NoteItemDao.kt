@@ -29,6 +29,6 @@ interface NoteItemDao {
 
     //Получение заметки по Id
     @Query("SELECT * FROM note_items WHERE note_id = :noteId")
-    suspend fun getNoteItemById(noteId: Int): NoteItem
+    suspend fun getNoteItemById(noteId: Long): NoteItem
 
 }
